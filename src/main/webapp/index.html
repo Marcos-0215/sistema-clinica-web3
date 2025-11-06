@@ -1,10 +1,83 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Clínica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #0077b6;
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        main {
+            margin-top: 2rem;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 1rem 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            background-color: #0096c7;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        a:hover {
+            background-color: #023e8a;
+        }
+
+        footer {
+            margin-top: 3rem;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sistema de Clínica</h1>
+        <p>Bem-vindo(a) ao sistema!</p>
+    </header>
+
+    <main>
+        <h2>Escolha o que você quer gerenciar:</h2>
+        <ul>
+            <li><a href="">Pacientes</a></li>
+            <li><a href="">Médicos</a></li>
+            <li><a href="">Medicamentos</a></li>
+            <li><a href="">Indicadores de Exame</a></li>
+        </ul>
+    </main>
+
+    <footer>
+        <p>Desenvolvido por Marcos André — IFPE</p>
+    </footer>
+</body>
 </html>

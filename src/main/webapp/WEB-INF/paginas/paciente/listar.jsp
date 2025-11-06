@@ -50,6 +50,8 @@
         <tr><td colspan="6">Nenhum paciente cadastrado.</td></tr>
         <% } %>
     </table>
+    
+    <p><a href="${pageContext.request.contextPath}/">Voltar</a></p>
 </body>
 </html>
 

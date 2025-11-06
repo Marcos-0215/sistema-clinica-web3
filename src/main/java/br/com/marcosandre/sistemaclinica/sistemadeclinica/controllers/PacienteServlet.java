@@ -22,7 +22,7 @@ import java.util.List;
  * @author André
  */
 
-@WebServlet(name = "PacienteServlet", urlPatterns = {"/paciente"})
+@WebServlet(name = "paciente", urlPatterns = {"/paciente"})
 
 public class PacienteServlet extends HttpServlet {
 
@@ -82,7 +82,7 @@ public class PacienteServlet extends HttpServlet {
             // DETALHAR
             Paciente p = RepositorioPaciente.buscarPorCpf(cpf);
             request.setAttribute("paciente", p);
-            request.getRequestDispatcher("W EB-INF/paginas/paciente/detalhes.jsp")
+            request.getRequestDispatcher("WEB-INF/paginas/paciente/detalhes.jsp")
                    .forward(request, response);
         } 
         else if (op.equals("editar") && cpf != null && !cpf.isEmpty()) {

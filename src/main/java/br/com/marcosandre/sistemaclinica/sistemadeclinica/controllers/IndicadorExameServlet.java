@@ -4,17 +4,24 @@
  */
 package br.com.marcosandre.sistemaclinica.sistemadeclinica.controllers;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import br.com.marcosandre.sistemaclinica.sistemadeclinica.model.negocio.IndicadorExame;
+import br.com.marcosandre.sistemaclinica.sistemadeclinica.model.repositorios.RepositorioIndicadorExame;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  *
  * @author André
  */
+
+@WebServlet(name = "indicadorexame", urlPatterns = {"/indicadorexame"})
+
 public class IndicadorExameServlet extends HttpServlet {
 
     /**
@@ -43,7 +50,7 @@ public class IndicadorExameServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -55,7 +62,43 @@ public class IndicadorExameServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String acao = request.getParameter("acao");
+
+        if (acao == null || acao.equals("listar")) {
+            request.setAttribute("indicadores", RepositorioIndicadorExame.listarTodos());
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/paginas/indicador/listar.jsp");
+            rd.forward(request, response);
+
+        } else if (acao.equals("editar")) {
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+            IndicadorExame indicador = RepositorioIndicadorExame.buscarPorCodigo(codigo);
+            request.setAttribute("indicador", indicador);
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/paginas/indicador/form.jsp");
+            rd.forward(request, response);
+
+        } else if (acao.equals("excluir")) {
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+            RepositorioIndicadorExame.deletar(codigo);
+            response.sendRedirect("indicadorexame?acao=listar");
+
+        } else if ("novo".equals(acao) || "form".equals(acao)) {
+            // FORM para novo
+            request.getRequestDispatcher("/WEB-INF/paginas/indicador/form.jsp")
+                   .forward(request, response);            
+        }
+        
+        else if (acao.equals("detalhes")) {
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+            IndicadorExame indicador = RepositorioIndicadorExame.buscarPorCodigo(codigo);
+            request.setAttribute("indicador", indicador);
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/paginas/indicador/detalhes.jsp");
+            rd.forward(request, response);
+
+        } else {
+            response.sendRedirect("indicadorexame?acao=listar");
+        }
+        
     }
 
     /**
@@ -69,7 +112,29 @@ public class IndicadorExameServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        int codigo = Integer.parseInt(request.getParameter("codigo"));
+        String indicador = request.getParameter("indicador");
+        String descricao = request.getParameter("descricao");
+        Double minValorReferencia = Double.parseDouble(request.getParameter("minValorReferencia"));
+        Double maxValorReferencia = Double.parseDouble(request.getParameter("maxValorReferencia"));
+
+        IndicadorExame i = new IndicadorExame();
+        i.setCodigo(codigo);
+        i.setIndicador(indicador);
+        i.setDescricao(descricao);
+        i.setMinValorReferencia(minValorReferencia);
+        i.setMaxValorReferencia(maxValorReferencia);
+
+        IndicadorExame existente = RepositorioIndicadorExame.buscarPorCodigo(codigo);
+        if (existente == null) {
+            RepositorioIndicadorExame.inserir(i);
+        } else {
+            RepositorioIndicadorExame.atualizar(i);
+        }
+
+        response.sendRedirect("indicadorexame?acao=listar");
+        
     }
 
     /**

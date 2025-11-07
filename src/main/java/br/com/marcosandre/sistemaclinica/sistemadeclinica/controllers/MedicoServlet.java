@@ -4,17 +4,24 @@
  */
 package br.com.marcosandre.sistemaclinica.sistemadeclinica.controllers;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import br.com.marcosandre.sistemaclinica.sistemadeclinica.model.negocio.Medico;
+import br.com.marcosandre.sistemaclinica.sistemadeclinica.model.repositorios.RepositorioMedico;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 /**
  *
  * @author André
  */
+
+@WebServlet(name = "medico", urlPatterns = {"/medico"})
+
 public class MedicoServlet extends HttpServlet {
 
     /**
@@ -43,7 +50,6 @@ public class MedicoServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -55,7 +61,43 @@ public class MedicoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String op = request.getParameter("op");
+        String crm = request.getParameter("crm");
+
+        if (op == null) {
+            // LISTAR
+            List<Medico> lista = RepositorioMedico.listarTodos();
+            request.setAttribute("medicos", lista);
+            request.getRequestDispatcher("WEB-INF/paginas/medico/listar.jsp")
+                   .forward(request, response);
+        } 
+        else if (op.equals("detalhes") && crm != null) {
+            // DETALHAR
+            Medico m = RepositorioMedico.buscarPorCrm(crm);
+            request.setAttribute("medico", m);
+            request.getRequestDispatcher("WEB-INF/paginas/medico/detalhes.jsp")
+                   .forward(request, response);
+        } 
+        else if (op.equals("editar") && crm != null) {
+            // EDITAR
+            Medico m = RepositorioMedico.buscarPorCrm(crm);
+            request.setAttribute("medico", m);
+            request.getRequestDispatcher("WEB-INF/paginas/medico/form.jsp")
+                   .forward(request, response);
+        } 
+        else if (op.equals("excluir") && crm != null) {
+            // EXCLUIR
+            RepositorioMedico.deletar(crm);
+            response.sendRedirect("medico");
+        } 
+        else if (op.equals("novo")) {
+            // NOVO CADASTRO
+            request.getRequestDispatcher("WEB-INF/paginas/medico/form.jsp")
+                   .forward(request, response);
+        }
+
+        
     }
 
     /**
@@ -69,7 +111,27 @@ public class MedicoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String crm = request.getParameter("crm");
+        String nome = request.getParameter("nome");
+        String especialidade = request.getParameter("especialidade");
+        String contato = request.getParameter("contato");
+
+        Medico m = new Medico();
+        m.setCrm(crm);
+        m.setNome(nome);
+        m.setEspecialidade(especialidade);
+        m.setContato(contato);
+
+        // Verifica se é atualização ou novo cadastro
+        if (RepositorioMedico.buscarPorCrm(crm) != null) {
+            RepositorioMedico.atualizar(m);
+        } else {
+            RepositorioMedico.inserir(m);
+        }
+
+        response.sendRedirect("medico");
+        
     }
 
     /**

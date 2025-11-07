@@ -51,7 +51,7 @@
         <% } %>
     </table>
     
-    <p><a href="${pageContext.request.contextPath}/">Voltar</a></p>
+    <p><a href="${pageContext.request.contextPath}/">Voltar para Home</a></p>
 </body>
 </html>
 

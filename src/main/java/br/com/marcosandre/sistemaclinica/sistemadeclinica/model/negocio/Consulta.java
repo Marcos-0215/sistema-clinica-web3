@@ -14,6 +14,10 @@ public class Consulta {
     private String dataHora;    
     private String dataHoraVolta;
     private String observacao;
+    
+    private Medico medico;
+    private Paciente paciente;
+    private Prontuario prontuario;
 
     public int getCodigo() {
         return codigo;
@@ -45,6 +49,30 @@ public class Consulta {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public Prontuario getProntuario() {
+        return prontuario;
+    }
+
+    public void setProntuario(Prontuario prontuario) {
+        this.prontuario = prontuario;
     }
     
     

@@ -14,7 +14,9 @@ public class Medico {
     private String nome;    
     private String especialidade;
     private String contato;
-
+    private String senha;
+    
+    
     public String getCrm() {
         return crm;
     }
@@ -46,6 +48,16 @@ public class Medico {
     public void setContato(String contato) {
         this.contato = contato;
     }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
+    
     
     
     

@@ -46,25 +46,33 @@ public class RepositorioMedico {
         }        
         return null;        
     }
-    
-    /*
-    public static void deletar(String crm){
         
-        for(Medico mAux: medicos){
-            
-            if(mAux.getCrm().equals(crm)){
-                medicos.remove(mAux);                
-                return;
-            }            
-        }        
-    }
-    */
     public static boolean deletar(String crm) {
         return medicos.removeIf(m -> m.getCrm().equals(crm));
     }
     
     public static List<Medico> listarTodos() {
         return medicos;
+    }    
+    
+    public static Medico login(String crm, String senha){
+        
+        for(Medico mAux: medicos){
+            if(mAux.getCrm().equals(crm) && mAux.getSenha().equals(senha)){
+                return mAux;
+            }
+        }
+        return null;
+    }
+    
+    public static void alterarSenha(String crm, String senha){
+        
+        for(Medico mAux: medicos){
+            if(mAux.getCrm().equals(crm)){
+                mAux.setSenha(senha);
+                return;
+            }
+        }        
     }
     
     

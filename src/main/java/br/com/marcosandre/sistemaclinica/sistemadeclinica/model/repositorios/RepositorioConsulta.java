@@ -60,5 +60,56 @@ public class RepositorioConsulta {
     }
     
     
+    public static List<Consulta> listarPorMedico(String crm) {
+
+        List<Consulta> resultado = new ArrayList<>();
+
+        for (Consulta c : consultas) {
+            if (c.getMedico() != null && c.getMedico().getCrm().equals(crm)) {
+                resultado.add(c);
+            }
+        }
+
+        return resultado;
+    }
+    
+    public static List<Consulta> listarConsultasSemProntuario(String crm) {
+
+        List<Consulta> resultado = new ArrayList<>();
+
+        for (Consulta c : consultas) {
+            boolean mesmoMedico = c.getMedico() != null && c.getMedico().getCrm().equals(crm);
+            boolean semProntuario = (c.getProntuario() == null);
+
+            if (mesmoMedico && semProntuario) {
+                resultado.add(c);
+            }
+        }
+
+        return resultado;
+    }
+    
+    public static List<Consulta> listarPorMedicoEPaciente(String crm, String cpfPaciente) {
+
+        List<Consulta> resultado = new ArrayList<>();
+
+        for (Consulta c : consultas) {
+
+            boolean mesmoMedico = c.getMedico() != null
+                                  && c.getMedico().getCrm().equals(crm);
+
+            boolean mesmoPaciente = c.getPaciente() != null
+                                    && c.getPaciente().getCpf().equals(cpfPaciente);
+
+            if (mesmoMedico && mesmoPaciente) {
+                resultado.add(c);
+            }
+        }
+
+        return resultado;
+    }
+
+
+
     
 }

@@ -42,6 +42,7 @@
                 <c:if test="${consulta != null}">
 
                     <table class="table table-bordered">
+
                         <tr>
                             <th style="width: 220px;">Código da Consulta</th>
                             <td>${consulta.codigo}</td>
@@ -55,12 +56,66 @@
                             </td>
                         </tr>
 
+                        <!-- DADOS DO PACIENTE -->
+                        <tr class="table-primary">
+                            <th colspan="2">Dados do Paciente</th>
+                        </tr>
+
                         <tr>
-                            <th>Paciente</th>
+                            <th>Nome</th>
+                            <td>${consulta.paciente.nome}</td>
+                        </tr>
+
+                        <tr>
+                            <th>CPF</th>
+                            <td>${consulta.paciente.cpf}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Endereço</th>
                             <td>
-                                ${consulta.paciente.nome}
-                                <br><small class="text-muted">CPF: ${consulta.paciente.cpf}</small>
+                                <c:choose>
+                                    <c:when test="${empty consulta.paciente.endereco}">
+                                        <span class="text-muted">Não informado</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${consulta.paciente.endereco}
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
+                        </tr>
+
+                        <tr>
+                            <th>Contato</th>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${empty consulta.paciente.contato}">
+                                        <span class="text-muted">Não informado</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${consulta.paciente.contato}
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>Plano de Saúde</th>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${empty consulta.paciente.planoSaude}">
+                                        <span class="text-muted">Não informado</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${consulta.paciente.planoSaude}
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+
+                        <!-- DADOS DA CONSULTA -->
+                        <tr class="table-primary">
+                            <th colspan="2">Informações da Consulta</th>
                         </tr>
 
                         <tr>
@@ -96,14 +151,24 @@
                             </td>
                         </tr>
 
+                        <!-- PRONTUÁRIO -->
+                        <tr class="table-primary">
+                            <th colspan="2">Prontuário</th>
+                        </tr>
+
                         <tr>
-                            <th>Prontuário</th>
+                            <th>Status</th>
                             <td>
                                 <c:choose>
                                     <c:when test="${consulta.prontuario == null}">
                                         <span class="text-muted">
                                             Nenhum prontuário vinculado a esta consulta.
                                         </span>
+                                        <br>
+                                        <a href="${pageContext.request.contextPath}/Prontuarios?op=form&consulta=${consulta.codigo}"
+                                           class="btn btn-sm btn-outline-success mt-2">
+                                            Criar Prontuário
+                                        </a>
                                     </c:when>
 
                                     <c:otherwise>
@@ -141,4 +206,5 @@
 
 </body>
 </html>
+
 

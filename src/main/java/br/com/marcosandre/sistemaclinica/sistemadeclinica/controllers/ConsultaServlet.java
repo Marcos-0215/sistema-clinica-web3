@@ -56,6 +56,23 @@ public class ConsultaServlet extends HttpServlet {
             rd.forward(request, response);
             return;
         }
+        
+        if (op.equals("detalhes")) {
+            
+            int codigo = Integer.parseInt(request.getParameter("codigo"));            
+            Consulta c = RepositorioConsulta.buscarPorCodigo(codigo);
+                        
+            if (c == null) {
+                response.sendRedirect("Consultas?op=listar");
+                return;
+            }
+            
+            request.setAttribute("consulta", c);
+
+            request.getRequestDispatcher("WEB-INF/paginas/consulta/detalhes.jsp")
+                   .forward(request, response);
+            return;
+        }
 
         // ABRIR FORM NOVO
         if (op.equals("form")) {

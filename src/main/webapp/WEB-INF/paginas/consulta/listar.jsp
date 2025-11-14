@@ -93,6 +93,12 @@
                                         </td>
 
                                         <td class="text-center">
+                                            
+                                            <!-- DETALHES -->
+                                            <a href="${pageContext.request.contextPath}/Consultas?op=detalhes&codigo=${c.codigo}"
+                                               class="btn btn-sm btn-info">
+                                                Detalhes
+                                            </a>
 
                                             <!-- EDITAR -->
                                             <a href="${pageContext.request.contextPath}/Consultas?op=editar&codigo=${c.codigo}"

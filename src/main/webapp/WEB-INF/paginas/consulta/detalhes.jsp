@@ -121,12 +121,12 @@
                     </table>
 
                     <div class="text-center mt-4">
-                        <a href="${pageContext.request.contextPath}/consultas?op=listar"
+                        <a href="${pageContext.request.contextPath}/Consultas?op=listar"
                            class="btn btn-secondary">
                             Voltar
                         </a>
 
-                        <a href="${pageContext.request.contextPath}/consultas?op=editar&codigo=${consulta.codigo}"
+                        <a href="${pageContext.request.contextPath}/Consultas?op=editar&codigo=${consulta.codigo}"
                            class="btn btn-warning ms-2">
                             Editar
                         </a>

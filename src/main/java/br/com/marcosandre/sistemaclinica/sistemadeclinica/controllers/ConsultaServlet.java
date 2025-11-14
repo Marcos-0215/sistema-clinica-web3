@@ -75,7 +75,7 @@ public class ConsultaServlet extends HttpServlet {
             Consulta c = RepositorioConsulta.buscarPorCodigo(codigo);
 
             if (c == null) {
-                response.sendRedirect("consultas?op=listar");
+                response.sendRedirect("Consultas?op=listar");
                 return;
             }
 
@@ -92,7 +92,7 @@ public class ConsultaServlet extends HttpServlet {
         if (op.equals("excluir")) {
             int codigo = Integer.parseInt(request.getParameter("codigo"));
             RepositorioConsulta.deletar(codigo);
-            response.sendRedirect("consultas?op=listar");
+            response.sendRedirect("Consultas?op=listar");
         }
         
     }
@@ -116,7 +116,7 @@ public class ConsultaServlet extends HttpServlet {
             RepositorioConsulta.inserir(c);
 
             session.setAttribute("msg", "Consulta marcada com sucesso!");
-            response.sendRedirect("consultas?op=listar");
+            response.sendRedirect("Consultas?op=listar");
             return;
         }
 
@@ -129,7 +129,7 @@ public class ConsultaServlet extends HttpServlet {
             RepositorioConsulta.atualizar(c);
 
             session.setAttribute("msg", "Consulta atualizada com sucesso!");
-            response.sendRedirect("consultas?op=listar");
+            response.sendRedirect("Consultas?op=listar");
         }
         
     }

@@ -47,7 +47,7 @@
                 <c:remove var="msg" scope="session"/>
             </c:if>
 
-            <form action="${pageContext.request.contextPath}/consultas" method="post">
+            <form action="${pageContext.request.contextPath}/Consultas" method="post">
 
                 <!-- Define se é inserir ou atualizar -->
                 <input type="hidden" name="op"

@@ -32,11 +32,11 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="consultas?op=novo">Marcar Consulta</a>
+                    <a class="nav-link" href="Consultas?op=form">Marcar Consulta</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="consultas?op=listar">Minhas Consultas</a>
+                    <a class="nav-link" href="Consultas?op=listar">Minhas Consultas</a>
                 </li>
 
                 <li class="nav-item">

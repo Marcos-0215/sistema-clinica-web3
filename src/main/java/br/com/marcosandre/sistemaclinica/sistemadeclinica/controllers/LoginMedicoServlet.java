@@ -29,6 +29,15 @@ public class LoginMedicoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        HttpSession session = request.getSession(false);
+
+    // Se JÁ estiver logado -> manda para a home
+    if (session != null && session.getAttribute("medicoLogado") != null) {
+        request.getRequestDispatcher("/WEB-INF/paginas/medico/indexMedico.jsp")
+               .forward(request, response);
+        return;
+    }
+        
         
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/paginas/medico/loginMedico.jsp");
         rd.forward(request, response);

@@ -30,6 +30,18 @@ public class LoginMedicoServlet extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = request.getSession(false);
+        String op = request.getParameter("op");
+
+        // LOGOUT 
+        if ("logout".equals(op)) {
+            
+            if (session != null) {
+                session.invalidate();
+            }
+            response.sendRedirect(request.getContextPath() + "/loginMedico");
+            return;
+        }
+          
 
     // Se JÁ estiver logado -> manda para a home
     if (session != null && session.getAttribute("medicoLogado") != null) {
@@ -37,7 +49,7 @@ public class LoginMedicoServlet extends HttpServlet {
         return;
     }
         
-        
+                
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/paginas/medico/loginMedico.jsp");
         rd.forward(request, response);
         
@@ -73,7 +85,6 @@ public class LoginMedicoServlet extends HttpServlet {
             }            
             
         }
-        
         
 
         // CADASTRO

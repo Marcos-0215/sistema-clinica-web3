@@ -7,8 +7,10 @@ package br.com.marcosandre.sistemaclinica.sistemadeclinica.controllers;
 import br.com.marcosandre.sistemaclinica.sistemadeclinica.model.negocio.Consulta;
 import br.com.marcosandre.sistemaclinica.sistemadeclinica.model.negocio.Medico;
 import br.com.marcosandre.sistemaclinica.sistemadeclinica.model.negocio.Paciente;
+import br.com.marcosandre.sistemaclinica.sistemadeclinica.model.negocio.Prontuario;
 import br.com.marcosandre.sistemaclinica.sistemadeclinica.model.repositorios.RepositorioConsulta;
 import br.com.marcosandre.sistemaclinica.sistemadeclinica.model.repositorios.RepositorioPaciente;
+import br.com.marcosandre.sistemaclinica.sistemadeclinica.model.repositorios.RepositorioProntuario;
 import jakarta.servlet.RequestDispatcher;
 
 import java.io.IOException;
@@ -19,8 +21,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.List;
+
 
 /**
  *
@@ -147,6 +148,57 @@ public class ConsultaServlet extends HttpServlet {
 
             session.setAttribute("msg", "Consulta atualizada com sucesso!");
             response.sendRedirect("Consultas?op=listar");
+        }
+        
+        // SALVAR NOVO PRONTUÁRIO        
+        if ("salvarProntuario".equals(op)) {
+
+            int codigoConsulta = Integer.parseInt(request.getParameter("consultaCodigo"));
+            Consulta consulta = RepositorioConsulta.buscarPorCodigo(codigoConsulta);
+
+            if (consulta == null) {
+                session.setAttribute("msg", "Consulta não encontrada!");
+                response.sendRedirect("consultas?op=listar");
+                return;
+            }
+
+            
+            Prontuario p = new Prontuario();
+            
+            p.setCodigo(RepositorioProntuario.listarTodos().size() + 1);
+
+            p.setDescricao(request.getParameter("descricao"));
+            p.setObservacao(request.getParameter("observacao"));
+            
+            RepositorioProntuario.inserir(p);
+            
+            consulta.setProntuario(p);
+
+            session.setAttribute("msg", "Prontuário cadastrado com sucesso!");
+            response.sendRedirect("Consultas?op=detalhes&codigo=" + consulta.getCodigo());
+        }
+        
+        // EDITAR PRONTUÁRIO EXISTENTE        
+        if ("editarProntuario".equals(op)) {
+
+            int codigoConsulta = Integer.parseInt(request.getParameter("consultaCodigo"));
+            Consulta consulta = RepositorioConsulta.buscarPorCodigo(codigoConsulta);
+
+            if (consulta == null || consulta.getProntuario() == null) {
+                session.setAttribute("msg", "Prontuário não encontrado!");
+                response.sendRedirect("consultas?op=listar");
+                return;
+            }
+
+            Prontuario p = consulta.getProntuario();
+
+            p.setDescricao(request.getParameter("descricao"));
+            p.setObservacao(request.getParameter("observacao"));
+
+            RepositorioProntuario.atualizar(p);
+
+            session.setAttribute("msg", "Prontuário atualizado com sucesso!");
+            response.sendRedirect("Consultas?op=detalhes&codigo=" + consulta.getCodigo());
         }
         
     }

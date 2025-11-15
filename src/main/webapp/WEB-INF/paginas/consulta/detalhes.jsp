@@ -55,8 +55,7 @@
                                 <br><small class="text-muted">CRM: ${consulta.medico.crm}</small>
                             </td>
                         </tr>
-
-                        <!-- DADOS DO PACIENTE -->
+                        
                         <tr class="table-primary">
                             <th colspan="2">Dados do Paciente</th>
                         </tr>
@@ -159,29 +158,36 @@
                         <tr>
                             <th>Status</th>
                             <td>
+
                                 <c:choose>
+
+                                    
                                     <c:when test="${consulta.prontuario == null}">
-                                        <span class="text-muted">
-                                            Nenhum prontuário vinculado a esta consulta.
-                                        </span>
-                                        <br>
-                                        <a href="${pageContext.request.contextPath}/Prontuarios?op=form&consulta=${consulta.codigo}"
-                                           class="btn btn-sm btn-outline-success mt-2">
+                                        <span class="text-muted">Nenhum prontuário cadastrado.</span>
+
+                                        
+                                        <button type="button" class="btn btn-sm btn-outline-success mt-2"
+                                                data-bs-toggle="modal" data-bs-target="#modalProntuario">
                                             Criar Prontuário
-                                        </a>
+                                        </button>
                                     </c:when>
 
+                                    
                                     <c:otherwise>
                                         Código: ${consulta.prontuario.codigo}
-                                        <br>
-                                        <a class="btn btn-sm btn-outline-primary mt-2"
-                                           href="${pageContext.request.contextPath}/Prontuarios?op=detalhes&codigo=${consulta.prontuario.codigo}">
-                                            Ver Prontuário
-                                        </a>
+
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-primary mt-2"
+                                                data-bs-toggle="modal" data-bs-target="#modalProntuario">
+                                            Ver / Editar Prontuário
+                                        </button>
                                     </c:otherwise>
+
                                 </c:choose>
+
                             </td>
                         </tr>
+
 
                     </table>
 
@@ -203,6 +209,83 @@
         </div>
 
     </div>
+    
+    
+    <!-- MODAL DO PRONTUÁRIO -->
+    <div class="modal fade" id="modalProntuario" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+
+                <form method="post" action="${pageContext.request.contextPath}/Consultas">
+
+                    <input type="hidden" name="op"
+                           value="${consulta.prontuario == null ? 'salvarProntuario' : 'atualizarProntuario'}">
+
+                    <input type="hidden" name="consultaCodigo" value="${consulta.codigo}">
+
+                    <c:if test="${consulta.prontuario != null}">
+                        <input type="hidden" name="prontuarioCodigo" value="${consulta.prontuario.codigo}">
+                    </c:if>
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <c:choose>
+                                <c:when test="${consulta.prontuario == null}">
+                                    Criar Prontuário
+                                </c:when>
+                                <c:otherwise>
+                                    Visualizar / Editar Prontuário
+                                </c:otherwise>
+                            </c:choose>
+                        </h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <!-- DESCRIÇÃO -->
+                        <div class="mb-3">
+                            <label class="form-label">Descrição</label>
+                            <textarea name="descricao" class="form-control" rows="3" required>
+                                <c:out value="${consulta.prontuario != null ? consulta.prontuario.descricao : ''}"/>
+                            </textarea>
+                        </div>
+
+                        <!-- OBSERVAÇÕES -->
+                        <div class="mb-3">
+                            <label class="form-label">Observações</label>
+                            <textarea name="observacao" class="form-control" rows="3">
+                                <c:out value="${consulta.prontuario != null ? consulta.prontuario.observacao : ''}"/>
+                            </textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="submit" class="btn btn-primary">
+                            <c:choose>
+                                <c:when test="${consulta.prontuario == null}">
+                                    Salvar
+                                </c:when>
+                                <c:otherwise>
+                                    Atualizar
+                                </c:otherwise>
+                            </c:choose>
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
 
 </body>
 </html>

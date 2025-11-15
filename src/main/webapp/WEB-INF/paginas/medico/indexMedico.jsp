@@ -45,7 +45,7 @@
 
             <div class="text-center mt-4">
                 <a href="Consultas?op=listar" class="btn btn-primary me-2">Ver Todas as Consultas</a>
-                <a href="pacientes" class="btn btn-outline-secondary">Ver Pacientes</a>
+                <a href="paciente" class="btn btn-outline-secondary">Ver Pacientes</a>
             </div>
         </div>
 

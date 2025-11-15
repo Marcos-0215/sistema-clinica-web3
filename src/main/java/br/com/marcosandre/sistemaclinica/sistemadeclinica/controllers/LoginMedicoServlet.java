@@ -33,8 +33,7 @@ public class LoginMedicoServlet extends HttpServlet {
 
     // Se JÁ estiver logado -> manda para a home
     if (session != null && session.getAttribute("medicoLogado") != null) {
-        request.getRequestDispatcher("/WEB-INF/paginas/medico/indexMedico.jsp")
-               .forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/medico/index");
         return;
     }
         
@@ -64,8 +63,8 @@ public class LoginMedicoServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("medicoLogado", medico);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/paginas/medico/indexMedico.jsp");
-rd.forward(request, response);    
+                response.sendRedirect(request.getContextPath() + "/medico/index");
+    
             } else {
 
                 request.setAttribute("mensagemErro", "CRM ou senha inválidos!");

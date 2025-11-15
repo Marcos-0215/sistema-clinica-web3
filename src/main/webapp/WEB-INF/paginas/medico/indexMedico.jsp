@@ -44,85 +44,69 @@
             </p>
 
             <div class="text-center mt-4">
-                <a href="Consultas?op=listar" class="btn btn-primary me-2">Ver Todas as Consultas</a>
-                <a href="paciente" class="btn btn-outline-secondary">Ver Pacientes</a>
+                <a href="${pageContext.request.contextPath}/Consultas?op=listar" class="btn btn-primary me-2">Ver Todas as Consultas</a>
+                <a href="${pageContext.request.contextPath}/paciente" class="btn btn-outline-secondary">Ver Pacientes</a>
             </div>
         </div>
 
         <!-- CONSULTAS PENDENTES (sem prontuário) -->
         <div class="card shadow-sm p-4">
 
-            <h4 class="mb-3 text-secondary">
-                Consultas Pendentes (sem prontuário)
-            </h4>
+            <h4 class="mb-3 text-secondary">Consultas Pendentes (sem prontuário)</h4>
 
-            <c:set var="consultas" 
-                   value="${RepositorioConsulta.listarPorMedico(sessionScope.medicoLogado.crm)}"/>
-
-            <!-- Verifica se existe pelo menos uma consulta pendente -->
-            <c:set var="temPendentes" value="false" />
-            <c:forEach var="c" items="${consultas}">
-                <c:if test="${c.prontuario == null}">
-                    <c:set var="temPendentes" value="true"/>
-                </c:if>
-            </c:forEach>
-
-            <c:if test="${temPendentes == false}">
+            <c:if test="${empty consultasPendentes}">
                 <div class="alert alert-info text-center">
                     Não há consultas pendentes no momento.
                 </div>
             </c:if>
 
-            <c:if test="${temPendentes == true}">
+            <c:if test="${not empty consultasPendentes}">
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Paciente</th>
                             <th>Data/Hora</th>
                             <th>Observação</th>
-                            <th style="width: 180px;">Ações</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <c:forEach var="c" items="${consultas}">
-                            <c:if test="${c.prontuario == null}">
+                        <c:forEach var="c" items="${consultasPendentes}">
+                            <tr>
+                                <td>${c.paciente.nome}</td>
+                                <td>${c.dataHora}</td>
 
-                                <tr>
-                                    <td>${c.paciente.nome}</td>
-                                    <td>${c.dataHora}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${empty c.observacao}">
+                                            <span class="text-muted">Sem obs.</span>
+                                        </c:when>
+                                        <c:otherwise>${c.observacao}</c:otherwise>
+                                    </c:choose>
+                                </td>
 
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${empty c.observacao}">
-                                                <span class="text-muted">Sem obs.</span>
-                                            </c:when>
-                                            <c:otherwise>${c.observacao}</c:otherwise>
-                                        </c:choose>
-                                    </td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/Consultas?op=detalhes&codigo=${c.codigo}"
+                                       class="btn btn-sm btn-info text-white">Detalhes</a>
 
-                                    <td>
-                                        <a href="Consultas?op=detalhes&codigo=${c.codigo}"
-                                           class="btn btn-sm btn-info text-white">Detalhes</a>
+                                    <a href="${pageContext.request.contextPath}/Consultas?op=editar&codigo=${c.codigo}"
+                                       class="btn btn-sm btn-warning">Editar</a>
 
-                                        <a href="Consultas?op=editar&codigo=${c.codigo}"
-                                           class="btn btn-sm btn-warning">Editar</a>
-
-                                        <a href="Consultas?op=excluir&codigo=${c.codigo}"
-                                           class="btn btn-sm btn-danger"
-                                           onclick="return confirm('Deseja realmente excluir esta consulta?');">
-                                           Excluir
-                                        </a>
-                                    </td>
-                                </tr>
-
-                            </c:if>
+                                    <a href="${pageContext.request.contextPath}/Consultas?op=excluir&codigo=${c.codigo}"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Deseja realmente excluir esta consulta?');">
+                                       Excluir
+                                    </a>
+                                </td>
+                            </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </c:if>
 
         </div>
+
 
     </div>
 

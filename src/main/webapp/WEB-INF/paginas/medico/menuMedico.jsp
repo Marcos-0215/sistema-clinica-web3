@@ -22,7 +22,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
     <div class="container-fluid">
-        <a class="navbar-brand fw-bold text-primary" href="loginMedico">Sistema de Clínica</a>
+        <a class="navbar-brand fw-bold text-primary" href="${pageContext.request.contextPath}/loginMedico">Sistema de Clínica</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMedico" 
                 aria-controls="navbarMedico" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -32,15 +32,15 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="Consultas?op=form">Marcar Consulta</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/Consultas?op=form">Marcar Consulta</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="Consultas?op=listar">Minhas Consultas</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/Consultas?op=listar">Minhas Consultas</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="paciente">Pacientes</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/paciente">Pacientes</a>
                 </li>
 
             </ul>
@@ -53,11 +53,11 @@
                         Bem-vindo, ${sessionScope.medicoLogado.nome}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="perfilMedico.jsp">Ver perfil</a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/perfilMedico.jsp">Ver perfil</a></li>
                         <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
                                data-bs-target="#modalAlterarSenha">Alterar senha</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="loginMedico?op=logout">Sair</a></li>
+                        <li><a class="dropdown-item text-danger" href="${pageContext.request.contextPath}/loginMedico?op=logout">Sair</a></li>
                     </ul>
                 </li>
             </ul>
